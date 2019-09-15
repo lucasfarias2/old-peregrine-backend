@@ -10,7 +10,7 @@ const ServicesController = require('./src/controllers/services');
 const CategoriesController = require('./src/controllers/categories');
 
 const server = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
