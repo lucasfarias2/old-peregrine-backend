@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const Order = require('../db/models/order');
+
+const router = express.Router();
 
 router.get('/', (req, res) => {
   Order.findAll().then(orders => {
@@ -9,11 +10,11 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  Order.create({
+  res.createTable(Order, {
+    id: req.body.id,
     author: req.body.author,
-    status: `AWAITING`
+    status: 'AWAITING',
   });
-  res.send('Order successfully created').status(200);
 });
 
 module.exports = router;

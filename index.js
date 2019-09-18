@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./src/db/db');
+const modelUsageMiddleware = require('./src/middleware/model-usage');
 
 const OrderController = require('./src/controllers/orders');
 const UsersController = require('./src/controllers/users');
@@ -15,8 +16,12 @@ const port = process.env.PORT || 3000;
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 
+server.use(modelUsageMiddleware);
+
 server.get('/', (req, res) => {
-  res.send('You sould query ORDERS, USERS, REVIEWS, LOCATIONS, SERVICES or CATEGORIES');
+  res.send(
+    'You sould query ORDERS, USERS, REVIEWS, LOCATIONS, SERVICES or CATEGORIES'
+  );
 });
 
 server.use('/orders', OrderController);
@@ -26,7 +31,7 @@ server.use('/locations', LocationsController);
 server.use('/services', ServicesController);
 server.use('/categories', CategoriesController);
 
-db.sync().then(() => {
+db.sync({ force: true }).then(() => {
   server.listen(port, () => {
     console.log(`Server listening on ${port}`);
   });
