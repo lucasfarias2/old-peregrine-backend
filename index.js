@@ -31,8 +31,9 @@ server.use('/locations', LocationsController);
 server.use('/services', ServicesController);
 server.use('/categories', CategoriesController);
 
-db.sync({ force: true }).then(() => {
+db.sync().then(() => {
   server.listen(port, () => {
+    // eslint-disable-next-line no-console
     console.log(`Server listening on ${port}`);
   });
 });
