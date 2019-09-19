@@ -18,6 +18,14 @@ const User = db.define('user', {
     type: ARRAY(STRING),
     allowNull: true,
   },
+  default_location_id: {
+    type: STRING,
+    allowNull: true,
+  },
+  type: {
+    type: STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = User;
