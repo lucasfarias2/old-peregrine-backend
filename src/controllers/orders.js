@@ -4,16 +4,16 @@ const Order = require('../db/models/order');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  Order.findAll().then(orders => {
-    res.json(orders);
-  });
+  res.findAll(Order);
 });
 
 router.post('/', (req, res) => {
+  const { user_id, worker_id, service_id } = req.body;
   res.createTable(Order, {
-    id: req.body.id,
-    author: req.body.author,
-    status: 'AWAITING',
+    user_id,
+    status: 'AWAITING', // TODO: add business logic layer,
+    worker_id,
+    service_id,
   });
 });
 

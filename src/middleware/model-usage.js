@@ -13,6 +13,12 @@ const modelUsageMiddleware = (req, res, next) => {
       });
   };
 
+  res.findAll = Model => {
+    Model.findAll().then(tables => {
+      res.json(tables);
+    });
+  };
+
   next();
 };
 
