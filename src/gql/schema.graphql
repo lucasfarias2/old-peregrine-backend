@@ -1,0 +1,56 @@
+type Category {
+  name: String!
+  children_categories: [Category!]!
+}
+
+type Location {
+  user_id: String!
+  address: String!
+  extra_info: String
+  zip_code: Int!
+  city: String!
+  country: String!
+}
+
+type Order {
+  user_id: String!
+  status: String!
+  worker_id: String!
+  service_id: String!
+}
+
+type Review {
+  service_id: String!
+  author_id: String!
+  worker_id: String!
+  order_id: String!
+  rating: Int!
+}
+
+type Service {
+  name: String!
+  category_id: String!
+  picture_url: String
+}
+
+type User {
+  email: String!
+  name: String!
+  profile_picture: String
+  services_ids: [String!]!
+  default_location_id: String!
+  type: String!
+}
+
+type Query {
+  categories: [Category]
+  locations: [Location]
+  orders: [Order]
+  reviews: [Review]
+  services: [Service]
+  users: [User]
+}
+
+type Mutation {
+  createCategory(name: String!): Category!
+}
