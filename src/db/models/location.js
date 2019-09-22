@@ -1,4 +1,4 @@
-const { STRING } = require('sequelize');
+const { BOOLEAN, STRING } = require('sequelize');
 const db = require('../db');
 
 const Location = db.define('location', {
@@ -23,6 +23,10 @@ const Location = db.define('location', {
   },
   country: {
     type: STRING,
+    allowNull: false,
+  },
+  is_default: {
+    type: BOOLEAN,
     allowNull: false,
   },
 });

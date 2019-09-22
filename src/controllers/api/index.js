@@ -2,7 +2,6 @@ const express = require('express');
 const OrderController = require('./orders');
 const UsersController = require('./users');
 const ReviewsController = require('./reviews');
-const LocationsController = require('./locations');
 const ServicesController = require('./services');
 const CategoriesController = require('./categories');
 
@@ -16,7 +15,6 @@ ApiRouter.get('/', (req, res) => {
 ApiRouter.use('/orders', OrderController);
 ApiRouter.use('/users', UsersController);
 ApiRouter.use('/reviews', ReviewsController);
-ApiRouter.use('/locations', LocationsController);
 ApiRouter.use('/services', ServicesController);
 ApiRouter.use('/categories', CategoriesController);
 
