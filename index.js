@@ -1,14 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const admin = require('firebase-admin');
 const db = require('./src/db/db');
 const modelUsageMiddleware = require('./src/middleware/model-usage');
+const ApiRouter = require('./src/controllers/api');
+const ServerRouter = require('./src/controllers/server');
 
-const OrderController = require('./src/controllers/orders');
-const UsersController = require('./src/controllers/users');
-const ReviewsController = require('./src/controllers/reviews');
-const LocationsController = require('./src/controllers/locations');
-const ServicesController = require('./src/controllers/services');
-const CategoriesController = require('./src/controllers/categories');
+const serviceAccount = require('./peregrine-hire-firebase-adminsdk-m3rs8-689ccc6791.json');
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -18,20 +16,29 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 server.use(modelUsageMiddleware);
 
-server.get('/', (req, res) => {
-  res.send(
-    'You sould query ORDERS, USERS, REVIEWS, LOCATIONS, SERVICES or CATEGORIES'
-  );
+server.use('/', ServerRouter);
+server.use('/api', ApiRouter);
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://peregrine-hire.firebaseio.com',
 });
 
-server.use('/orders', OrderController);
-server.use('/users', UsersController);
-server.use('/reviews', ReviewsController);
-server.use('/locations', LocationsController);
-server.use('/services', ServicesController);
-server.use('/categories', CategoriesController);
+admin
+  .auth()
+  .verifyIdToken(
+    'eyJhbGciOiJSUzI1NiIsImtpZCI6IjBhOTAwNTFmYzA5ZThmNjBlMTE2N2ViYzMxMjYwZjNiM2Y2YmJhYmIiLCJ0eXAiOiJKV1QifQ'
+  )
+  .then(decodedToken => {
+    const { uid } = decodedToken;
+    console.log('decoded uid', uid);
+  })
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.error(error.message);
+  });
 
-db.sync().then(() => {
+db.sync({ force: true }).then(() => {
   server.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(`Server listening on ${port}`);

@@ -1,5 +1,5 @@
 const express = require('express');
-const Location = require('../db/models/location');
+const Location = require('../../db/models/location');
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const Review = require('../db/models/review');
+const Review = require('../../db/models/review');
 
 const router = express.Router();
 
