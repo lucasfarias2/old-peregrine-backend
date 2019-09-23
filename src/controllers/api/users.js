@@ -20,14 +20,18 @@ router.post('/', (req, res) => {
     locations,
     type,
   } = req.body;
-  res.createTable(User, {
-    email,
-    name,
-    profile_picture,
-    services_ids,
-    locations,
-    type,
-  });
+  res.createTable(
+    User,
+    {
+      email,
+      name,
+      profile_picture,
+      services_ids,
+      locations,
+      type,
+    },
+    { include: ['locations'] }
+  );
 });
 
 module.exports = router;
