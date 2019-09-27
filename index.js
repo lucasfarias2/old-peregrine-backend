@@ -24,29 +24,7 @@ admin.initializeApp({
   databaseURL: 'https://peregrine-hire.firebaseio.com',
 });
 
-admin
-  .auth()
-  .verifyIdToken('token')
-  .then(decodedToken => {
-    const { uid } = decodedToken;
-    console.log('decoded uid', uid);
-    admin
-      .auth()
-      .getUser(uid)
-      .then(userRecord => {
-        // See the UserRecord reference doc for the contents of userRecord.
-        console.log('Successfully fetched user data:', userRecord.toJSON());
-      })
-      .catch(error => {
-        console.log('Error fetching user data:', error);
-      });
-  })
-  .catch(error => {
-    // eslint-disable-next-line no-console
-    console.error(error.message);
-  });
-
-db.sync({ force: true }).then(() => {
+db.sync({ force: false }).then(() => {
   server.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(`Server listening on ${port}`);

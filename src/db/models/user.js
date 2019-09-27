@@ -6,6 +6,11 @@ const Location = require('./location');
 class User extends Model {}
 User.init(
   {
+    uid: {
+      type: STRING,
+      allowNull: true,
+      primaryKey: true,
+    },
     email: {
       type: STRING,
       allowNull: true,
