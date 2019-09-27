@@ -1,7 +1,6 @@
 /* eslint-disable max-classes-per-file */
 const { ARRAY, STRING, Model } = require('sequelize');
 const db = require('../db');
-const Location = require('./location');
 
 class User extends Model {}
 User.init(
@@ -34,7 +33,5 @@ User.init(
   },
   { sequelize: db, modelName: 'user' }
 );
-
-User.hasMany(Location, { as: 'locations', foreignKey: 'user_id' });
 
 module.exports = User;
